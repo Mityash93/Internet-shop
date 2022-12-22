@@ -1,4 +1,4 @@
-@import '../variables.module';
+@import "../variables.module";
 
 .sort {
   position: relative;
@@ -31,7 +31,7 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 10px 0;
-    width: 160px;
+    width: 215px;
 
     ul {
       overflow: hidden;
@@ -48,6 +48,29 @@
           font-weight: bold;
           color: $orange;
         }
+      }
+    }
+  }
+
+  &__type {
+    display: inline-block;
+    margin-left: 5px;
+  
+    button {
+      text-align: center;
+      width: 25px;
+      height: 25px;
+      padding: 3px;
+      border: 1px solid #fe5f1e;
+      border-radius: 30px;
+      margin-right: 5px;
+      cursor: pointer;
+      background-color: white;
+      color: #fe5f1e;
+
+      &:hover {
+        background-color: #fe5f1e;
+        color: white;
       }
     }
   }

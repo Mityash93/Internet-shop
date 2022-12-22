@@ -3,10 +3,14 @@ import classNames from "classnames";
 
 import s from "../styles/components/_sort.module.scss";
 
-const Sort = ({ activeItemsPopup, onChangeSort }) => {
+const Sort = ({ activeItemsPopup, onChangeSort, changeItemPopup }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
 
-  const itemsPopup = ["популярности", "цене", "алфавиту"];
+  const itemsPopup = [
+    { title: "популярности", sortProperty: "rating" },
+    { title: "цене", sortProperty: "price" },
+    { title: "алфавиту", sortProperty: "name" },
+  ];
 
   const onClickActiveItemsPopup = (i) => {
     onChangeSort(i);
@@ -30,22 +34,27 @@ const Sort = ({ activeItemsPopup, onChangeSort }) => {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setVisiblePopup(!visiblePopup)}>
-          {itemsPopup[activeItemsPopup]}
+          {activeItemsPopup.title}
         </span>
       </div>
 
       {visiblePopup && (
         <div className={s.sort__popup}>
           <ul>
-            {itemsPopup.map((item, i) => (
+            {itemsPopup.map((obj, i) => (
               <li
                 key={i}
-                onClick={() => onClickActiveItemsPopup(i)}
+                onClick={() => onClickActiveItemsPopup(obj)}
                 className={classNames({
-                  [s.active]: activeItemsPopup === i,
+                  [s.active]:
+                    activeItemsPopup.sortProperty === obj.sortProperty,
                 })}
               >
-                {item}
+                {obj.title}
+                <div className={s.sort__type}>
+                  <button onClick={() => changeItemPopup("asc")}> ↑ </button>
+                  <button onClick={() => changeItemPopup("desc")}> ↓ </button>
+                </div>
               </li>
             ))}
           </ul>

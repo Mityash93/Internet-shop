@@ -10,28 +10,39 @@ import s from "../styles/page/_home.module.scss";
 const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState(0);
-  const [activeItemsPopup, setActiveItemsPopup] = useState(0);
+  const [activeCategoryId, setActiveCategoryId] = useState(0);
+  const [activeItemPopup, setActiveItemsPopup] = useState({
+    title: "популярности",
+    sortProperty: "rating",
+  });
+  const [changeItemPopup, setChangeItemPopup] = useState("asc");
 
   useEffect(() => {
-    fetch("https://639da3c71ec9c6657baed210.mockapi.io/items")
+    setIsLoading(true);
+    const category = activeCategoryId > 0 ? `category=${activeCategoryId}` : "";
+    const sortBy = activeItemPopup.sortProperty;
+    fetch(
+      `https://639da3c71ec9c6657baed210.mockapi.io/items?${category}&sortBy=${sortBy}&order=${changeItemPopup}`
+    )
       .then((res) => res.json())
       .then((json) => {
         setItems(json);
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, []);
+  }, [activeCategoryId, activeItemPopup, changeItemPopup]);
+  
   return (
     <div className={s.container}>
       <div className={s.content__top}>
         <Categories
-          activeCategory={activeCategory}
-          onChangeCategory={(i) => setActiveCategory(i)}
+          activeCategory={activeCategoryId}
+          onChangeCategory={(i) => setActiveCategoryId(i)}
         />
         <Sort
-          activeItemsPopup={activeItemsPopup}
+          activeItemsPopup={activeItemPopup}
           onChangeSort={(i) => setActiveItemsPopup(i)}
+          changeItemPopup={(type) => setChangeItemPopup(type)}
         />
       </div>
       <h2 className={s.content__title}>Все пиццы</h2>
