@@ -4,7 +4,7 @@ import React from "react";
 import s from "../styles/components/_categories.module.scss";
 
 const Categories = ({ activeCategory, onChangeCategory }) => {
-  const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Закрытые"];
+  const categories = ["Все", "Мясные", "Вегетарианская", "Гриль"];
 
   return (
     <div className={s.categories}>

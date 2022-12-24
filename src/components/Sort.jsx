@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import s from "../styles/components/_sort.module.scss";
 
-const Sort = ({ activeItemsPopup, onChangeSort, changeItemPopup }) => {
+const Sort = ({ activeItemPopup, onChangeSort, changeItemPopup }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
 
   const itemsPopup = [
@@ -34,7 +34,7 @@ const Sort = ({ activeItemsPopup, onChangeSort, changeItemPopup }) => {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setVisiblePopup(!visiblePopup)}>
-          {activeItemsPopup.title}
+          {activeItemPopup.title}
         </span>
       </div>
 
@@ -47,7 +47,7 @@ const Sort = ({ activeItemsPopup, onChangeSort, changeItemPopup }) => {
                 onClick={() => onClickActiveItemsPopup(obj)}
                 className={classNames({
                   [s.active]:
-                    activeItemsPopup.sortProperty === obj.sortProperty,
+                    activeItemPopup.sortProperty === obj.sortProperty,
                 })}
               >
                 {obj.title}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LogoSvg from "../assets/image/pizza-logo.svg";
 
 import s from "../styles/components/_header.module.scss";
+import SearchInput from "./SearchInput";
 
 const Header = () => {
   return (
@@ -18,7 +19,8 @@ const Header = () => {
             </div>
           </div>
         </Link>
-        <div className={s.header__cart}>
+        <SearchInput />
+        <div>
           <Link to="/order" className={`${s.button} ${s.button_cart}`}>
             <span>520 ₽</span>
             <div className={s.button__delimiter}></div>
