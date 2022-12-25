@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { MyContext } from "../App";
 import Categories from "../components/Categories";
@@ -10,15 +11,13 @@ import Pagination from "../components/Pagination";
 import s from "../styles/page/_home.module.scss";
 
 const Home = () => {
+  const { activeCategoryId, activeItemPopup, itemPopupAscDesc } = useSelector(
+    (state) => state.filterSlice
+  );
+
   const { searchValue } = useContext(MyContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategoryId, setActiveCategoryId] = useState(0);
-  const [activeItemPopup, setActiveItemsPopup] = useState({
-    title: "популярности",
-    sortProperty: "rating",
-  });
-  const [changeItemPopup, setChangeItemPopup] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : "";
     const sortBy = activeItemPopup.sortProperty;
     fetch(
-      `https://639da3c71ec9c6657baed210.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${changeItemPopup}${search}`
+      `https://639da3c71ec9c6657baed210.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${itemPopupAscDesc}${search}`
     )
       .then((res) => res.json())
       .then((json) => {
@@ -38,7 +37,7 @@ const Home = () => {
   }, [
     activeCategoryId,
     activeItemPopup,
-    changeItemPopup,
+    itemPopupAscDesc,
     searchValue,
     currentPage,
   ]);
@@ -49,15 +48,8 @@ const Home = () => {
   return (
     <div className={s.container}>
       <div className={s.content__top}>
-        <Categories
-          activeCategory={activeCategoryId}
-          onChangeCategory={(i) => setActiveCategoryId(i)}
-        />
-        <Sort
-          activeItemPopup={activeItemPopup}
-          onChangeSort={(i) => setActiveItemsPopup(i)}
-          changeItemPopup={(type) => setChangeItemPopup(type)}
-        />
+        <Categories />
+        <Sort />
       </div>
       <h2 className={s.content__title}>Все пиццы</h2>
       <div className={s.content__items}>{isLoading ? skeleton : pizzas}</div>

@@ -1,19 +1,26 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
 import s from "../styles/components/_sort.module.scss";
+import {
+  setActiveItemsPopup,
+  sortItemPopupAscDesc,
+} from "../redux/slices/Filter";
 
-const Sort = ({ activeItemPopup, onChangeSort, changeItemPopup }) => {
+const itemsPopup = [
+  { title: "популярности", sortProperty: "rating" },
+  { title: "цене", sortProperty: "price" },
+  { title: "алфавиту", sortProperty: "name" },
+];
+
+const Sort = () => {
+  const { activeItemPopup } = useSelector((state) => state.filterSlice);
+  const dispatch = useDispatch();
   const [visiblePopup, setVisiblePopup] = useState(false);
 
-  const itemsPopup = [
-    { title: "популярности", sortProperty: "rating" },
-    { title: "цене", sortProperty: "price" },
-    { title: "алфавиту", sortProperty: "name" },
-  ];
-
-  const onClickActiveItemsPopup = (i) => {
-    onChangeSort(i);
+  const onClickActiveItemsPopup = (obj) => {
+    dispatch(setActiveItemsPopup(obj));
     setVisiblePopup(false);
   };
 
@@ -46,14 +53,21 @@ const Sort = ({ activeItemPopup, onChangeSort, changeItemPopup }) => {
                 key={i}
                 onClick={() => onClickActiveItemsPopup(obj)}
                 className={classNames({
-                  [s.active]:
-                    activeItemPopup.sortProperty === obj.sortProperty,
+                  [s.active]: activeItemPopup.sortProperty === obj.sortProperty,
                 })}
               >
                 {obj.title}
                 <div className={s.sort__type}>
-                  <button onClick={() => changeItemPopup("asc")}> ↑ </button>
-                  <button onClick={() => changeItemPopup("desc")}> ↓ </button>
+                  <button onClick={() => dispatch(sortItemPopupAscDesc("asc"))}>
+                    {" "}
+                    ↑{" "}
+                  </button>
+                  <button
+                    onClick={() => dispatch(sortItemPopupAscDesc("desc"))}
+                  >
+                    {" "}
+                    ↓{" "}
+                  </button>
                 </div>
               </li>
             ))}
