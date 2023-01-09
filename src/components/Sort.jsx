@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
 import s from "../styles/components/_sort.module.scss";
 import {
+  selectFilter,
   setActiveItemsPopup,
   sortItemPopupAscDesc,
 } from "../redux/slices/Filter";
@@ -15,9 +16,20 @@ const itemsPopup = [
 ];
 
 const Sort = () => {
-  const { activeItemPopup } = useSelector((state) => state.filterSlice);
+  const { activeItemPopup } = useSelector(selectFilter);
   const dispatch = useDispatch();
+  const sortRef = useRef();
+
   const [visiblePopup, setVisiblePopup] = useState(false);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      const path = e.path || (e.composedPath && e.composedPath());
+      !path.includes(sortRef.current) && setVisiblePopup(false);
+    };
+    document.body.addEventListener("click", handleClick);
+    return () => document.body.removeEventListener("click", handleClick);
+  }, []);
 
   const onClickActiveItemsPopup = (obj) => {
     dispatch(setActiveItemsPopup(obj));
@@ -25,7 +37,7 @@ const Sort = () => {
   };
 
   return (
-    <div className={s.sort}>
+    <div ref={sortRef} className={s.sort}>
       <div className={s.sort__label}>
         <svg
           width="10"

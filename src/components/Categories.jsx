@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveCategoryId } from "../redux/slices/Filter";
+import { selectFilter, setActiveCategoryId } from "../redux/slices/Filter";
 
 import s from "../styles/components/_categories.module.scss";
 
 const Categories = () => {
-  const { activeCategoryId } = useSelector((state) => state.filterSlice);
+  const { activeCategoryId } = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const categories = ["Все", "Мясные", "Вегетарианская", "Гриль"];

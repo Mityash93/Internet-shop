@@ -1,9 +1,29 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import EmptyOrder from "../components/EmptyOrder";
+
+import OrderPizzasItem from "../components/OrderPizzasItem";
+import { selectOrderCart, totalRemoveItems } from "../redux/slices/OderCart";
 
 import s from "../styles/page/_orderPizzas.module.scss";
 
 const OrderPizzas = () => {
+  const dispatch = useDispatch();
+  const { items, totalPrice } = useSelector(selectOrderCart);
+
+  const totalCount = items.reduce((sum, item) => item.count + sum, 0);
+
+  const onClickClear = () => {
+    if (window.confirm('Очистить корзину?')) {
+      dispatch(totalRemoveItems());
+    }
+  };
+
+  if (!totalCount) {
+    return <EmptyOrder/>
+  } 
+
   return (
     <div className={`${s.container} ${s.container_cart}`}>
       <div className={s.cart}>
@@ -40,7 +60,7 @@ const OrderPizzas = () => {
             </svg>
             Корзина
           </h2>
-          <div className={s.cart__clear}>
+          <div onClick={onClickClear} className={s.cart__clear}>
             <svg
               width="20"
               height="20"
@@ -82,97 +102,19 @@ const OrderPizzas = () => {
           </div>
         </div>
         <div className={s.content__items}>
-          <div className={s.cart__item}>
-            <div className={s.cart__item_img}>
-              <img
-                // className="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
-              />
-            </div>
-            <div className={s.cart__item_info}>
-              <h3>Сырная</h3>
-              <p>тонкое, 20 см.</p>
-            </div>
-            <div className={s.cart__item_count}>
-              <button
-                className={`${s.button} ${s.button_outline} ${s.button_circle} ${s.button_minus}`}
-              >
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z"
-                    fill="#EB5A1E"
-                  ></path>
-                  <path
-                    d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"
-                    fill="#EB5A1E"
-                  ></path>
-                </svg>
-              </button>
-              <b>2</b>
-              <button
-                className={`${s.button} ${s.button_outline} ${s.button_circle} ${s.button_plus}`}
-              >
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z"
-                    fill="#EB5A1E"
-                  ></path>
-                  <path
-                    d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"
-                    fill="#EB5A1E"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-            <div className={s.cart__item_price}>
-              <b>200 ₽</b>
-            </div>
-            <div className={s.cart__item_remove}>
-              <div
-                className={`${s.button} ${s.button_outline} ${s.button_circle}`}
-              >
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z"
-                    fill="#EB5A1E"
-                  ></path>
-                  <path
-                    d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"
-                    fill="#EB5A1E"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-          </div>
+          {items.map((item) => (
+            <OrderPizzasItem key={item.id} {...item} />
+          ))}
         </div>
         <div className={s.cart__bottom}>
           <div className={s.cart__bottom_details}>
             <span>
               {" "}
-              Всего пицц: <b>2 шт.</b>{" "}
+              Всего пицц: <b>{totalCount} шт.</b>{" "}
             </span>
             <span>
               {" "}
-              Сумма заказа: <b>2 ₽</b>{" "}
+              Сумма заказа: <b>{totalPrice} ₽</b>{" "}
             </span>
           </div>
           <div className={s.cart__bottom_buttons}>

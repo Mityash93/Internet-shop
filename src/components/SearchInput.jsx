@@ -1,11 +1,33 @@
-import React, { useContext } from "react";
+import debounce from "lodash.debounce";
+import React, { useCallback, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { MyContext } from "../App";
+import { setSearchValue } from "../redux/slices/Filter";
 
 import s from "../styles/components/_searchInput.module.scss";
 
 const SearchInput = () => {
-  const { searchValue, setSearchValue } = useContext(MyContext);
+  const dispatch = useDispatch();
+  
+  const [value, setValue] = useState("");
+
+  const inputRef = useRef();
+
+  const debounceChangeSearchValue = useCallback(
+    debounce((str) => dispatch(setSearchValue(str)), 500),
+    []
+  );
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+    debounceChangeSearchValue(e.target.value);
+  };
+
+  const onPutDeleteFocus = () => {
+    dispatch(setSearchValue(""));
+    setValue("");
+    inputRef.current.focus();
+  };
 
   return (
     <div className={`${s.search} ${s.search__three}`}>
@@ -44,14 +66,15 @@ const SearchInput = () => {
         />
       </svg>
       <input
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        ref={inputRef}
+        value={value}
+        onChange={onChangeInput}
         className={s.search__input}
         placeholder="Поиск пиццы..."
       />
-      {searchValue && (
+      {value && (
         <svg
-          onClick={() => setSearchValue("")}
+          onClick={onPutDeleteFocus}
           className={s.search__clearIcon}
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"

@@ -1,38 +1,38 @@
-import { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { MyContext } from "../App";
 import Categories from "../components/Categories";
-import Sort from "../components/Sort";
+import Pagination from "../components/Pagination";
 import PizzaBlock from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Sceleton.jsx";
-import Pagination from "../components/Pagination";
+import Sort from "../components/Sort";
+import { selectFilter } from "../redux/slices/Filter";
+import { fetchPizzasById } from "../redux/slices/PizzasStore";
 
 import s from "../styles/page/_home.module.scss";
 
 const Home = () => {
-  const { activeCategoryId, activeItemPopup, itemPopupAscDesc } = useSelector(
-    (state) => state.filterSlice
-  );
-
-  const { searchValue } = useContext(MyContext);
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const { activeCategoryId, activeItemPopup, itemPopupAscDesc, currentPage } =
+    useSelector(selectFilter);
+  const { items, status } = useSelector((state) => state.pizzasStore);
+  const dispatch = useDispatch();
+  const { searchValue } = useSelector(selectFilter);
 
   useEffect(() => {
-    setIsLoading(true);
     const category = activeCategoryId > 0 ? `category=${activeCategoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
     const sortBy = activeItemPopup.sortProperty;
-    fetch(
-      `https://639da3c71ec9c6657baed210.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${itemPopupAscDesc}${search}`
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setItems(json);
-        setIsLoading(false);
-      });
+
+    dispatch(
+      fetchPizzasById({
+        currentPage,
+        category,
+        sortBy,
+        itemPopupAscDesc,
+        search,
+      })
+    );
+
     window.scrollTo(0, 0);
   }, [
     activeCategoryId,
@@ -52,10 +52,22 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className={s.content__title}>Все пиццы</h2>
-      <div className={s.content__items}>{isLoading ? skeleton : pizzas}</div>
-      {activeCategoryId === 0 && (
-        <Pagination onPageChange={(number) => setCurrentPage(number)} />
+      {status === "error" ? (
+        <div className={s.content__error}>
+          <h2>Произошла ошибка сервера 😕</h2>
+          <p>
+            К сожалению, не удалось получить данные. Попробуйте повторить
+            попытку позже.
+          </p>
+        </div>
+      ) : (
+        <div className={s.content__items}>
+          {" "}
+          {status === "loading" ? skeleton : pizzas}
+        </div>
       )}
+
+      {activeCategoryId === 0 && <Pagination />}
     </div>
   );
 };
