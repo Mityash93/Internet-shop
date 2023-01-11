@@ -1,11 +1,28 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import classNames from "classnames";
 
 import s from "../../styles/components/_pizza-block.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, selectOrderCartById } from "../../redux/slices/OderCart";
+import { Link } from "react-router-dom";
 
-const PizzaBlock = ({ id, imageUrl, name, types, sizes, price }) => {
+type PizzaBlockProps = {
+  id: string;
+  imageUrl: string;
+  name: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+};
+
+const PizzaBlock: FC<PizzaBlockProps> = ({
+  id,
+  imageUrl,
+  name,
+  types,
+  sizes,
+  price,
+}) => {
   const dicpatch = useDispatch();
   const addedItem = useSelector(selectOrderCartById(id));
 
@@ -24,6 +41,7 @@ const PizzaBlock = ({ id, imageUrl, name, types, sizes, price }) => {
       price,
       types: typesName[activeType],
       sizes: sizes[activeSize],
+      count: 0,
     };
 
     dicpatch(addItems(item));
@@ -32,7 +50,9 @@ const PizzaBlock = ({ id, imageUrl, name, types, sizes, price }) => {
   return (
     <div className={s.block_wrapper}>
       <div className={s.block}>
-        <img className={s.block__image} src={imageUrl} alt="Pizza" />
+        <Link to={`/pizza/${id}`}>
+          <img className={s.block__image} src={imageUrl} alt="Pizza" />
+        </Link>
         <h4 className={s.block__title}>{name}</h4>
         <div className={s.block__selector}>
           <ul>

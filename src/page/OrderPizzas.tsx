@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import EmptyOrder from "../components/EmptyOrder";
@@ -8,11 +8,11 @@ import { selectOrderCart, totalRemoveItems } from "../redux/slices/OderCart";
 
 import s from "../styles/page/_orderPizzas.module.scss";
 
-const OrderPizzas = () => {
+const OrderPizzas: FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectOrderCart);
 
-  const totalCount = items.reduce((sum, item) => item.count + sum, 0);
+  const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0);
 
   const onClickClear = () => {
     if (window.confirm('Очистить корзину?')) {
@@ -102,7 +102,7 @@ const OrderPizzas = () => {
           </div>
         </div>
         <div className={s.content__items}>
-          {items.map((item) => (
+          {items.map((item: any) => (
             <OrderPizzasItem key={item.id} {...item} />
           ))}
         </div>

@@ -1,11 +1,11 @@
 import classNames from "classnames";
-import React from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFilter, setActiveCategoryId } from "../redux/slices/Filter";
 
 import s from "../styles/components/_categories.module.scss";
 
-const Categories = () => {
+const Categories: FC = () => {
   const { activeCategoryId } = useSelector(selectFilter);
   const dispatch = useDispatch();
 

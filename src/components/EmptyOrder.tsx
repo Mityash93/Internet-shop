@@ -1,11 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 import emptyImg from "../assets/image/empty-cart.png";
 
 import s from "../styles/components/_orderPizzasEmpty.module.scss";
 
-const EmptyOrder = () => {
+const EmptyOrder: FC = () => {
   return (
     <div className={s.cart__empty}>
       <h2>

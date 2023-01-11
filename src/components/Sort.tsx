@@ -9,7 +9,12 @@ import {
   sortItemPopupAscDesc,
 } from "../redux/slices/Filter";
 
-const itemsPopup = [
+type SortItem = {
+  title: string;
+  sortProperty: string;
+};
+
+const itemsPopup: SortItem[] = [
   { title: "популярности", sortProperty: "rating" },
   { title: "цене", sortProperty: "price" },
   { title: "алфавиту", sortProperty: "name" },
@@ -18,20 +23,22 @@ const itemsPopup = [
 const Sort = () => {
   const { activeItemPopup } = useSelector(selectFilter);
   const dispatch = useDispatch();
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const [visiblePopup, setVisiblePopup] = useState(false);
 
   useEffect(() => {
-    const handleClick = (e) => {
-      const path = e.path || (e.composedPath && e.composedPath());
-      !path.includes(sortRef.current) && setVisiblePopup(false);
+    const handleClick = (e: MouseEvent) => {
+      const path = e.composedPath();
+      sortRef.current &&
+        !path.includes(sortRef.current) &&
+        setVisiblePopup(false);
     };
     document.body.addEventListener("click", handleClick);
     return () => document.body.removeEventListener("click", handleClick);
   }, []);
 
-  const onClickActiveItemsPopup = (obj) => {
+  const onClickActiveItemsPopup = (obj: SortItem) => {
     dispatch(setActiveItemsPopup(obj));
     setVisiblePopup(false);
   };

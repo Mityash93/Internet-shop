@@ -31,38 +31,37 @@
     }
 
     .button {
-        display: inline-block;
-       
-        border-radius: 30px;
-        padding: 10px 20px;
-        min-width: 100px;
-        text-align: center;
-        cursor: pointer;
-        transition: background-color $duration ease-in-out,
-          border-color $duration ease-in-out;
-        border: 1px solid transparent;
-        border-color: darken($color: $gray-line, $amount: 10);
-        svg {
-          width: 11.5px;
-          height: 11.5px;
-          position: relative;
-        }
-        &:hover,
-        &:active {
-        //   border-color: darken($color: $gray-line, $amount: 80);
-        //   background-color: darken($color: $gray-line, $amount: 80);
-        }
+      display: inline-block;
 
+      border-radius: 30px;
+      padding: 10px 20px;
+      min-width: 100px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color $duration ease-in-out,
+        border-color $duration ease-in-out;
+      border: 1px solid transparent;
+      border-color: darken($color: $gray-line, $amount: 10);
+      svg {
+        width: 11.5px;
+        height: 11.5px;
+        position: relative;
       }
+    }
 
     .button_black {
-        color: #fff;
-       
+      background-color: black;
       padding: 12px 0 14px;
       width: 230px;
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+      &:hover {
+        background-color: darken($orange, 5%);
+      }
+      & span {
+        color: #fff;
+      }
     }
   }
 }
