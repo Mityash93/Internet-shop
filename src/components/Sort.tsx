@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
+import React, { FC, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import s from "../styles/components/_sort.module.scss";
 import {
-  selectFilter,
   setActiveItemsPopup,
   sortItemPopupAscDesc,
-} from "../redux/slices/Filter";
+} from "../redux/filterPizzas/slice";
+import { ActiveItem } from "../redux/filterPizzas/types";
+import s from "../styles/components/_sort.module.scss";
 
 type SortItem = {
   title: string;
-  sortProperty: string;
+  sortProperty: "rating" | "price" | "name";
 };
 
 const itemsPopup: SortItem[] = [
@@ -20,8 +20,11 @@ const itemsPopup: SortItem[] = [
   { title: "алфавиту", sortProperty: "name" },
 ];
 
-const Sort = () => {
-  const { activeItemPopup } = useSelector(selectFilter);
+type SortProps = {
+  activeItemPopup: ActiveItem;
+};
+
+const Sort: FC<SortProps> = React.memo(({ activeItemPopup }) => {
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -95,6 +98,6 @@ const Sort = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

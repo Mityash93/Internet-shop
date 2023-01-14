@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ActiveItem, FilterState } from "./types";
 
-const initialState = {
+const initialState: FilterState = {
   searchValue: "",
   activeCategoryId: 0,
   activeItemPopup: {
@@ -15,25 +16,23 @@ export const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setSearchValue(state, action) {
+    setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
     },
-    setActiveCategoryId(state, action) {
+    setActiveCategoryId(state, action: PayloadAction<number>) {
       state.activeCategoryId = action.payload;
     },
-    setActiveItemsPopup(state, action) {
+    setActiveItemsPopup(state, action: PayloadAction<ActiveItem>) {
       state.activeItemPopup = action.payload;
     },
-    sortItemPopupAscDesc(state, action) {
+    sortItemPopupAscDesc(state, action: PayloadAction<string>) {
       state.itemPopupAscDesc = action.payload;
     },
-    setCurrentPage(state, action) {
+    setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
   },
 });
-
-export const selectFilter = (state) => state.filter
 
 export const {
   setSearchValue,

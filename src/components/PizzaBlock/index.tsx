@@ -1,10 +1,11 @@
-import React, { FC, useState } from "react";
 import classNames from "classnames";
+import { FC, useState } from "react";
 
-import s from "../../styles/components/_pizza-block.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems, selectOrderCartById } from "../../redux/slices/OderCart";
 import { Link } from "react-router-dom";
+import { selectOrderCartById } from "../../redux/orderCart/selectors";
+import { addItems } from "../../redux/orderCart/slice";
+import s from "../../styles/components/_pizza-block.module.scss";
 
 type PizzaBlockProps = {
   id: string;
@@ -52,8 +53,9 @@ const PizzaBlock: FC<PizzaBlockProps> = ({
       <div className={s.block}>
         <Link to={`/pizza/${id}`}>
           <img className={s.block__image} src={imageUrl} alt="Pizza" />
+
+          <h4 className={s.block__title}>{name}</h4>
         </Link>
-        <h4 className={s.block__title}>{name}</h4>
         <div className={s.block__selector}>
           <ul>
             {types.map((type, i) => (

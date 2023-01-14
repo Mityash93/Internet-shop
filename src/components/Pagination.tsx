@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import ReactPaginate from "react-paginate";
 import { useDispatch } from "react-redux";
-import { setCurrentPage } from "../redux/slices/Filter";
+import { setCurrentPage } from "../redux/filterPizzas/slice";
 
 import s from "../styles/components/_pagination.module.scss";
 
-const Pagination: FC = () => {
+const Pagination: FC = React.memo(() => {
   const dispatch = useDispatch();
 
   return (
@@ -19,6 +19,6 @@ const Pagination: FC = () => {
       pageCount={3}
     />
   );
-};
+});
 
 export default Pagination;

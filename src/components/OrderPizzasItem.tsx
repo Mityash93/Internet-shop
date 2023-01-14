@@ -1,7 +1,12 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 
-import { addItems, minusItemSign, removeItems } from "../redux/slices/OderCart";
+import {
+  addItems,
+  minusItemSign,
+  removeItems
+} from "../redux/orderCart/slice";
+import { OrderCartItem } from "../redux/orderCart/types";
 
 import s from "../styles/components/_orderPizzasItem.module.scss";
 
@@ -9,11 +14,11 @@ type OrderPizzasItemProps = {
   id: string;
   imageUrl: string;
   price: number;
-  types: number;
+  types: string;
   sizes: number;
   name: string;
   count: number;
-}
+};
 
 const OrderPizzasItem: FC<OrderPizzasItemProps> = ({
   id,
@@ -33,7 +38,7 @@ const OrderPizzasItem: FC<OrderPizzasItemProps> = ({
   };
 
   const onPlusItem = () => {
-    dispatch(addItems({ id }));
+    dispatch(addItems({ id } as OrderCartItem));
   };
 
   const onMinusItem = () => {
@@ -53,6 +58,7 @@ const OrderPizzasItem: FC<OrderPizzasItemProps> = ({
       </div>
       <div className={s.cart__item_count}>
         <button
+          disabled={count === 1}
           type="button"
           onClick={onMinusItem}
           className={`${s.button} ${s.button_outline} ${s.button_circle} ${s.button_minus}`}

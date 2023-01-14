@@ -1,12 +1,15 @@
 import classNames from "classnames";
 import React, { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectFilter, setActiveCategoryId } from "../redux/slices/Filter";
+import { useDispatch } from "react-redux";
+import { setActiveCategoryId } from "../redux/filterPizzas/slice";
 
 import s from "../styles/components/_categories.module.scss";
 
-const Categories: FC = () => {
-  const { activeCategoryId } = useSelector(selectFilter);
+type CategoriesProps = {
+  activeCategoryId: number;
+};
+
+const Categories: FC<CategoriesProps> = React.memo(({ activeCategoryId }) => {
   const dispatch = useDispatch();
 
   const categories = ["Все", "Мясные", "Вегетарианская", "Гриль"];
@@ -28,6 +31,6 @@ const Categories: FC = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

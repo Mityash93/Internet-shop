@@ -1,19 +1,22 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 import LogoSvg from "../assets/image/pizza-logo.svg";
-import { selectOrderCart } from "../redux/slices/OderCart";
+import { selectOrderCart } from "../redux/orderCart/selectors";
+import { OrderCartItem } from "../redux/orderCart/types";
+import SearchInput from "./SearchInput";
 
 import s from "../styles/components/_header.module.scss";
-import SearchInput from "./SearchInput";
 
 const Header: FC = () => {
   const { items, totalPrice } = useSelector(selectOrderCart);
   const location = useLocation();
 
-  const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0);
-  
+  const totalCount = items.reduce(
+    (sum: number, item: OrderCartItem) => item.count + sum,
+    0
+  );
 
   return (
     <div className={s.header}>

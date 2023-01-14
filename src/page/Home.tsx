@@ -1,22 +1,25 @@
 import { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import PizzaBlock from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import Sort from "../components/Sort";
-import { selectFilter } from "../redux/slices/Filter";
-import { fetchPizzasById } from "../redux/slices/PizzasStore";
+import { selectFilter } from "../redux/filterPizzas/selectors";
+import { fetchPizzasById } from "../redux/PizzaStore/asyncAction";
+import { RootState, useAppDispatch } from "../redux/store";
 
 import s from "../styles/page/_home.module.scss";
 
 const Home: FC = () => {
-  const { activeCategoryId, activeItemPopup, itemPopupAscDesc, currentPage } =
+  const { activeCategoryId, activeItemPopup, itemPopupAscDesc, currentPage, searchValue } =
     useSelector(selectFilter);
-  const { items, status } = useSelector((state) =>  state.pizzasStore);
-  const dispatch = useDispatch();
-  const { searchValue } = useSelector(selectFilter);
+  const { items, status } = useSelector(
+    (state: RootState) => state.pizzasStore
+  );
+  const dispatch = useAppDispatch();
+  
 
   useEffect(() => {
     const category = activeCategoryId > 0 ? `category=${activeCategoryId}` : "";
@@ -24,7 +27,6 @@ const Home: FC = () => {
     const sortBy = activeItemPopup.sortProperty;
 
     dispatch(
-      // @ts-ignore
       fetchPizzasById({
         currentPage,
         category,
@@ -50,8 +52,8 @@ const Home: FC = () => {
   return (
     <div className={s.container}>
       <div className={s.content__top}>
-        <Categories />
-        <Sort />
+        <Categories activeCategoryId={activeCategoryId} />
+        <Sort activeItemPopup={activeItemPopup} />
       </div>
       <h2 className={s.content__title}>Все пиццы</h2>
       {status === "error" ? (

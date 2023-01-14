@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import EmptyOrder from "../components/EmptyOrder";
 
 import OrderPizzasItem from "../components/OrderPizzasItem";
-import { selectOrderCart, totalRemoveItems } from "../redux/slices/OderCart";
+import { selectOrderCart } from "../redux/orderCart/selectors";
+import { totalRemoveItems } from "../redux/orderCart/slice";
+import { OrderCartItem } from "../redux/orderCart/types";
 
 import s from "../styles/page/_orderPizzas.module.scss";
 
@@ -12,17 +14,20 @@ const OrderPizzas: FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectOrderCart);
 
-  const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0);
+  const totalCount = items.reduce(
+    (sum: number, item: OrderCartItem) => item.count + sum,
+    0
+  );
 
   const onClickClear = () => {
-    if (window.confirm('Очистить корзину?')) {
+    if (window.confirm("Очистить корзину?")) {
       dispatch(totalRemoveItems());
     }
   };
 
   if (!totalCount) {
-    return <EmptyOrder/>
-  } 
+    return <EmptyOrder />;
+  }
 
   return (
     <div className={`${s.container} ${s.container_cart}`}>
@@ -102,7 +107,7 @@ const OrderPizzas: FC = () => {
           </div>
         </div>
         <div className={s.content__items}>
-          {items.map((item: any) => (
+          {items.map((item: OrderCartItem) => (
             <OrderPizzasItem key={item.id} {...item} />
           ))}
         </div>

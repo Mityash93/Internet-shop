@@ -2,7 +2,7 @@ import debounce from "lodash.debounce";
 import React, { FC, useCallback, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { setSearchValue } from "../redux/slices/Filter";
+import { setSearchValue } from "../redux/filterPizzas/slice";
 
 import s from "../styles/components/_searchInput.module.scss";
 
@@ -14,7 +14,7 @@ const SearchInput: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const debounceChangeSearchValue = useCallback(
-    debounce((str: string) => dispatch(setSearchValue(str)), 500),
+    debounce((str: string) => dispatch(setSearchValue(str)), 700),
     []
   );
 
