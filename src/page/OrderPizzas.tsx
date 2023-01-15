@@ -1,17 +1,18 @@
-import React, { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import EmptyOrder from "../components/EmptyOrder";
 
-import OrderPizzasItem from "../components/OrderPizzasItem";
+import { EmptyOrder, OrderPizzasItem } from "../components";
+
 import { selectOrderCart } from "../redux/orderCart/selectors";
 import { totalRemoveItems } from "../redux/orderCart/slice";
 import { OrderCartItem } from "../redux/orderCart/types";
+import { useAppDispatch } from "../redux/store";
 
 import s from "../styles/page/_orderPizzas.module.scss";
 
 const OrderPizzas: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { items, totalPrice } = useSelector(selectOrderCart);
 
   const totalCount = items.reduce(

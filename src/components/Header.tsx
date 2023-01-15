@@ -2,15 +2,18 @@ import { FC } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
+import { SearchInput } from ".";
 import LogoSvg from "../assets/image/pizza-logo.svg";
+
 import { selectOrderCart } from "../redux/orderCart/selectors";
 import { OrderCartItem } from "../redux/orderCart/types";
-import SearchInput from "./SearchInput";
 
 import s from "../styles/components/_header.module.scss";
 
-const Header: FC = () => {
+
+export const Header: FC = () => {
   const { items, totalPrice } = useSelector(selectOrderCart);
+  
   const location = useLocation();
 
   const totalCount = items.reduce(
@@ -74,5 +77,3 @@ const Header: FC = () => {
     </div>
   );
 };
-
-export default Header;

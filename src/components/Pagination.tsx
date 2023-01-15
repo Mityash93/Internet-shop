@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch } from "react-redux";
+
 import { setCurrentPage } from "../redux/filterPizzas/slice";
+import { useAppDispatch } from "../redux/store";
 
 import s from "../styles/components/_pagination.module.scss";
 
-const Pagination: FC = React.memo(() => {
-  const dispatch = useDispatch();
+export const Pagination: FC = React.memo(() => {
+  const dispatch = useAppDispatch();
 
   return (
     <ReactPaginate
@@ -20,5 +21,3 @@ const Pagination: FC = React.memo(() => {
     />
   );
 });
-
-export default Pagination;

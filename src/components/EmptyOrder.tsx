@@ -5,7 +5,7 @@ import emptyImg from "../assets/image/empty-cart.png";
 
 import s from "../styles/components/_orderPizzasEmpty.module.scss";
 
-const EmptyOrder: FC = () => {
+export const EmptyOrder: FC = () => {
   return (
     <div className={s.cart__empty}>
       <h2>
@@ -22,6 +22,4 @@ const EmptyOrder: FC = () => {
       </Link>
     </div>
   );
-}
-
-export default EmptyOrder;
+};

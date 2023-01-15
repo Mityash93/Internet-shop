@@ -1,12 +1,8 @@
 import { FC } from "react";
-import { useDispatch } from "react-redux";
 
-import {
-  addItems,
-  minusItemSign,
-  removeItems
-} from "../redux/orderCart/slice";
+import { addItems, minusItemSign, removeItems } from "../redux/orderCart/slice";
 import { OrderCartItem } from "../redux/orderCart/types";
+import { useAppDispatch } from "../redux/store";
 
 import s from "../styles/components/_orderPizzasItem.module.scss";
 
@@ -20,7 +16,7 @@ type OrderPizzasItemProps = {
   count: number;
 };
 
-const OrderPizzasItem: FC<OrderPizzasItemProps> = ({
+export const OrderPizzasItem: FC<OrderPizzasItemProps> = ({
   id,
   imageUrl,
   price,
@@ -29,7 +25,7 @@ const OrderPizzasItem: FC<OrderPizzasItemProps> = ({
   name,
   count,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onRemoveItem = () => {
     if (window.confirm("Ты действительно хочешь удалить товар?")) {
@@ -130,5 +126,3 @@ const OrderPizzasItem: FC<OrderPizzasItemProps> = ({
     </div>
   );
 };
-
-export default OrderPizzasItem;

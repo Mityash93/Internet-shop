@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import { FC, useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 import { selectOrderCartById } from "../../redux/orderCart/selectors";
 import { addItems } from "../../redux/orderCart/slice";
+import { useAppDispatch } from "../../redux/store";
 import s from "../../styles/components/_pizza-block.module.scss";
 
 type PizzaBlockProps = {
@@ -16,7 +17,7 @@ type PizzaBlockProps = {
   price: number;
 };
 
-const PizzaBlock: FC<PizzaBlockProps> = ({
+export const PizzaBlock: FC<PizzaBlockProps> = ({
   id,
   imageUrl,
   name,
@@ -24,7 +25,8 @@ const PizzaBlock: FC<PizzaBlockProps> = ({
   sizes,
   price,
 }) => {
-  const dicpatch = useDispatch();
+  const dicpatch = useAppDispatch();
+
   const addedItem = useSelector(selectOrderCartById(id));
 
   const typesName = ["тонкое", "традиционное"];
@@ -111,4 +113,4 @@ const PizzaBlock: FC<PizzaBlockProps> = ({
   );
 };
 
-export default PizzaBlock;
+

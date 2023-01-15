@@ -1,11 +1,14 @@
 import { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import Categories from "../components/Categories";
-import Pagination from "../components/Pagination";
-import PizzaBlock from "../components/PizzaBlock";
-import Sceleton from "../components/PizzaBlock/Sceleton";
-import Sort from "../components/Sort";
+import {
+  Categories,
+  Pagination,
+  PizzaBlock,
+  Sceleton,
+  Sort,
+} from "../components";
+
 import { selectFilter } from "../redux/filterPizzas/selectors";
 import { fetchPizzasById } from "../redux/PizzaStore/asyncAction";
 import { RootState, useAppDispatch } from "../redux/store";
@@ -13,13 +16,17 @@ import { RootState, useAppDispatch } from "../redux/store";
 import s from "../styles/page/_home.module.scss";
 
 const Home: FC = () => {
-  const { activeCategoryId, activeItemPopup, itemPopupAscDesc, currentPage, searchValue } =
-    useSelector(selectFilter);
+  const {
+    activeCategoryId,
+    activeItemPopup,
+    itemPopupAscDesc,
+    currentPage,
+    searchValue,
+  } = useSelector(selectFilter);
   const { items, status } = useSelector(
     (state: RootState) => state.pizzasStore
   );
   const dispatch = useAppDispatch();
-  
 
   useEffect(() => {
     const category = activeCategoryId > 0 ? `category=${activeCategoryId}` : "";
