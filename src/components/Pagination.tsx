@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import ReactPaginate from "react-paginate";
 
-import { setCurrentPage } from "../redux/filterPizzas/slice";
-import { useAppDispatch } from "../redux/store";
+import { setCurrentPage } from "../store/filterPizzas/slice";
+import { useAppDispatch } from "../store/store";
 
 import s from "../styles/components/_pagination.module.scss";
 

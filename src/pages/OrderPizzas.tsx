@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 import { EmptyOrder, OrderPizzasItem } from "../components";
 
-import { selectOrderCart } from "../redux/orderCart/selectors";
-import { totalRemoveItems } from "../redux/orderCart/slice";
-import { OrderCartItem } from "../redux/orderCart/types";
-import { useAppDispatch } from "../redux/store";
+import { selectOrderCart } from "../store/orderCart/selectors";
+import { totalRemoveItems } from "../store/orderCart/slice";
+import { OrderCartItem } from "../store/orderCart/types";
+import { useAppDispatch } from "../store/store";
 
 import s from "../styles/page/_orderPizzas.module.scss";
 

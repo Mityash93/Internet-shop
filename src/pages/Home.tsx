@@ -9,9 +9,9 @@ import {
   Sort,
 } from "../components";
 
-import { selectFilter } from "../redux/filterPizzas/selectors";
-import { fetchPizzasById } from "../redux/PizzaStore/asyncAction";
-import { RootState, useAppDispatch } from "../redux/store";
+import { selectFilter } from "../store/filterPizzas/selectors";
+import { fetchPizzasById } from "../store/PizzaStore/asyncAction";
+import { RootState, useAppDispatch } from "../store/store";
 
 import s from "../styles/page/_home.module.scss";
 
@@ -27,6 +27,8 @@ const Home: FC = () => {
     (state: RootState) => state.pizzasStore
   );
   const dispatch = useAppDispatch();
+  
+  
 
   useEffect(() => {
     const category = activeCategoryId > 0 ? `category=${activeCategoryId}` : "";
@@ -54,7 +56,7 @@ const Home: FC = () => {
   ]);
 
   const skeleton = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
-  const pizzas = items.map((obj: any) => <PizzaBlock {...obj} key={obj.id} />);
+  const pizzas = items.map((obj) => <PizzaBlock {...obj} key={obj.id} />);
 
   return (
     <div className={s.container}>
@@ -73,7 +75,6 @@ const Home: FC = () => {
         </div>
       ) : (
         <div className={s.content__items}>
-          {" "}
           {status === "loading" ? skeleton : pizzas}
         </div>
       )}

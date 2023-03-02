@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { addItems, minusItemSign, removeItems } from "../redux/orderCart/slice";
-import { OrderCartItem } from "../redux/orderCart/types";
-import { useAppDispatch } from "../redux/store";
+import { addItems, minusItemSign, removeItems } from "../store/orderCart/slice";
+import { OrderCartItem } from "../store/orderCart/types";
+import { useAppDispatch } from "../store/store";
 
 import s from "../styles/components/_orderPizzasItem.module.scss";
 

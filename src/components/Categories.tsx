@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, { FC } from "react";
 
-import { setActiveCategoryId } from "../redux/filterPizzas/slice";
-import { useAppDispatch } from "../redux/store";
+import { setActiveCategoryId } from "../store/filterPizzas/slice";
+import { useAppDispatch } from "../store/store";
 
 import s from "../styles/components/_categories.module.scss";
 

@@ -4,9 +4,9 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import {
   setActiveItemsPopup,
   sortItemPopupAscDesc,
-} from "../redux/filterPizzas/slice";
-import { ActiveItem } from "../redux/filterPizzas/types";
-import { useAppDispatch } from "../redux/store";
+} from "../store/filterPizzas/slice";
+import { ActiveItem } from "../store/filterPizzas/types";
+import { useAppDispatch } from "../store/store";
 
 import s from "../styles/components/_sort.module.scss";
 
@@ -27,7 +27,7 @@ type SortProps = {
 
 export const Sort: FC<SortProps> = React.memo(({ activeItemPopup }) => {
   const dispatch = useAppDispatch();
-  
+
   const sortRef = useRef<HTMLDivElement>(null);
 
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -83,14 +83,12 @@ export const Sort: FC<SortProps> = React.memo(({ activeItemPopup }) => {
                 {obj.title}
                 <div className={s.sort__type}>
                   <button onClick={() => dispatch(sortItemPopupAscDesc("asc"))}>
-                    {" "}
-                    ↑{" "}
+                    ↑
                   </button>
                   <button
                     onClick={() => dispatch(sortItemPopupAscDesc("desc"))}
                   >
-                    {" "}
-                    ↓{" "}
+                    ↓
                   </button>
                 </div>
               </li>

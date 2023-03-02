@@ -1,8 +1,8 @@
 import debounce from "lodash.debounce";
 import React, { FC, useCallback, useRef, useState } from "react";
 
-import { setSearchValue } from "../redux/filterPizzas/slice";
-import { useAppDispatch } from "../redux/store";
+import { setSearchValue } from "../store/filterPizzas/slice";
+import { useAppDispatch } from "../store/store";
 
 import s from "../styles/components/_searchInput.module.scss";
 

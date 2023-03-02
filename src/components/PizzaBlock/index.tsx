@@ -3,9 +3,9 @@ import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { selectOrderCartById } from "../../redux/orderCart/selectors";
-import { addItems } from "../../redux/orderCart/slice";
-import { useAppDispatch } from "../../redux/store";
+import { selectOrderCartById } from "../../store/orderCart/selectors";
+import { addItems } from "../../store/orderCart/slice";
+import { useAppDispatch } from "../../store/store";
 import s from "../../styles/components/_pizza-block.module.scss";
 
 type PizzaBlockProps = {
@@ -55,7 +55,6 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
       <div className={s.block}>
         <Link to={`/pizza/${id}`}>
           <img className={s.block__image} src={imageUrl} alt="Pizza" />
-
           <h4 className={s.block__title}>{name}</h4>
         </Link>
         <div className={s.block__selector}>
@@ -112,5 +111,3 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
     </div>
   );
 };
-
-

@@ -5,8 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import { SearchInput } from ".";
 import LogoSvg from "../assets/image/pizza-logo.svg";
 
-import { selectOrderCart } from "../redux/orderCart/selectors";
-import { OrderCartItem } from "../redux/orderCart/types";
+import { selectOrderCart } from "../store/orderCart/selectors";
+import { OrderCartItem } from "../store/orderCart/types";
 
 import s from "../styles/components/_header.module.scss";
 
